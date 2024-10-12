@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+       
+    <meta charset="UTF-8">
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title> Ahmeds-web </title>
+
+
+</head>
+<body>
+    
+
+    <style>
+         body {
+               background-color:  gray  ;
+              }
+    
+    </style>
+    
+    <h1 style="color: black; text-align: center; size: 100% ;"> Welcome to Ahmeds-web</h1>
+    
+    <p style="font-size: 16px; color: rgb(55, 55, 55);">Welcome to Ahmeds-Web, where creativity meets innovation. We specialize in providing top-notch graphic design, web development, and mobile application services tailored to meet your business needs. At Ahmeds-Web, our goal is to help you stand out with cutting-edge designs and seamless user experiences. Let us bring your vision to life and take your business to the next level. Get started with us today!</p>
+    
+    <button style="background-color: black; color: white; padding: 10px; border: none;">Get Started</button>
+
+
+
+</body>
+</html>
