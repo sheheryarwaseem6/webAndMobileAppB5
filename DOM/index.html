@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Learning DOM</h1>
+    <p id = "p2">p1</p>
+    <p id = "p2">p2</p>
+    <input type="radio" name="gender" id="male" value="male">
+    <input type="password" name="password" id="password">
+    <input type="button" value="showPassword" onmouseover="showPassword()">
+    <input type="radio" name="gender" id="female" value="female">
+    <p class="p3" style="background-color: red; ">p3</p>
+    <div class="main">
+        <!-- <p class="p3">salfkhsadkfjhasdkfh</p> -->
+    </div>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+
+    
+
+    <script>
+        // document.write("Hello World")
+        // let item = document.getElementById("p2") 
+        // console.log(item)
+        // let name = document.getElementsByName("gender")
+        // console.log(name)
+        // let getClass = document.getElementsByClassName("p3")
+        // console.log(getClass)
+        // let getTag = document.getElementsByTagName("p")
+        // console.log(getTag)
+        //         getQuery.innerHTML = `    <h1>Learning DOM</h1>
+        //     <p id = "p2">p1</p>
+        //     <p id = "p2">p2</p>
+        //     <input type="radio" name="gender" id="male" value="male">
+        //     <input type="radio" name="gender" id="female" value="female">
+//     <p class="p3">p3</p>
+//     <div class="main">
+//         <p class="p3">salfkhsadkfjhasdkfh</p>
+//     </div>
+//     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+// `
+        // let getClass = document.querySelector(".main")
+        // let newElement = document.createElement("h1")
+        // let newText = document.createTextNode("Hello World")
+        // newElement.appendChild(newText)
+        // getClass.appendChild(newElement)
+        // console.log(getClass)
+
+        // let getElement = document.getElementById("male")
+        // getElement.setAttribute("class", "radio1")
+        // getElement.removeAttribute("name")
+        // console.log(getElement.attributes)
+        // console.log(getElement.getAttribute("class"))
+        // let getElement = document.querySelector(".p3")
+        // let styles = getElement.getAttribute("style")
+        // // console.log(styles)
+        // getElement.style = styles +" color: red; font-size: 20px; font-weight: bold;"
+        
+        let showPassword = () =>{
+            let getPassword = document.getElementById("password")
+            getPassword.type === "password" ? getPassword.type = "text" : getPassword.type = "password"
+        }
+    </script>
+</body>
+</html>
