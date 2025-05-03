@@ -11,7 +11,7 @@
     <p id = "p2">p2</p>
     <input type="radio" name="gender" id="male" value="male">
     <input type="password" name="password" id="password">
-    <input type="button" value="showPassword" onmouseover="showPassword()">
+    <input type="button" value="showPassword" onclick="showPassword()">
     <input type="radio" name="gender" id="female" value="female">
     <p class="p3" style="background-color: red; ">p3</p>
     <div class="main">
@@ -58,11 +58,22 @@
         // let styles = getElement.getAttribute("style")
         // // console.log(styles)
         // getElement.style = styles +" color: red; font-size: 20px; font-weight: bold;"
-        
+
+        let getPassword = document.getElementById("password")
         let showPassword = () =>{
-            let getPassword = document.getElementById("password")
             getPassword.type === "password" ? getPassword.type = "text" : getPassword.type = "password"
+            localStorage.setItem("password", getPassword.value)
         }
+        window.addEventListener("DOMContentLoaded", () => {
+        const savedPassword = localStorage.getItem("password");
+        if (savedPassword) {
+            getPassword.value = savedPassword
+        }
+        else{
+            getPassword.value = ""
+        }
+});
+
     </script>
 </body>
 </html>
