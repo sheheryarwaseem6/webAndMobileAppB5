@@ -60,10 +60,6 @@
         // getElement.style = styles +" color: red; font-size: 20px; font-weight: bold;"
 
         let getPassword = document.getElementById("password")
-        let showPassword = () =>{
-            getPassword.type === "password" ? getPassword.type = "text" : getPassword.type = "password"
-            localStorage.setItem("password", getPassword.value)
-        }
         window.addEventListener("DOMContentLoaded", () => {
         const savedPassword = localStorage.getItem("password");
         if (savedPassword) {
@@ -73,6 +69,11 @@
             getPassword.value = ""
         }
 });
+        let showPassword = () =>{
+            getPassword.type === "password" ? getPassword.type = "text" : getPassword.type = "password"
+            localStorage.setItem("password", getPassword.value)
+        }
+        
 
     </script>
 </body>
