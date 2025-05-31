@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ListItems from "./ListItems";
+import CompletedItems from "./CompletedItems";
 
 function InputField() {
   const [task, setTask] = useState("");
@@ -10,7 +11,7 @@ function InputField() {
   function handleAddTask() {
     // console.log(task)
 
-    setTaskList([...taskList, task]);
+    setTaskList([...taskList, {name : task, isCompleted : false}]);
     setTask("");
   }
   // console.log(taskList)
@@ -25,6 +26,7 @@ function InputField() {
       />
       <button onClick={handleAddTask}>Add Task</button>
       <ListItems taskList={taskList} setTaskList={setTaskList} />
+      <CompletedItems taskList={taskList} setTaskList={setTaskList} />
     </div>
   );
 }
