@@ -1,8 +1,48 @@
 import express from 'express'
+import { client } from '../dbConfig.js';
+import { ObjectId } from 'mongodb';
 const router = express.Router()
+const myDB = client.db("myEcommerce");
+const Products = myDB.collection("products");
 
-router.get('/user/products', (req, res) => {
-  res.send('user products')
+router.post('/user/product', async (req, res) => {
+  const product = {
+    title : req.body.title,
+    description: req.body.description,
+    price : req.body.price
+  }
+
+  const response = await Products.insertOne(product)
+  if(response){
+    return res.send("product added successfully")
+  }
+  else{
+    return res.send("something went wrong")
+  }
+})
+
+router.get('/user/products',async (req, res) => {
+  const allProducts = Products.find()
+  const response = await allProducts.toArray()
+  console.log(response)
+  if(response.length > 0){
+    return res.send(response)
+
+  }else{
+
+    return res.send('No products found')
+  }
+})
+
+router.delete('/user/product/:id', async (req, res) =>{
+  const productId =new ObjectId(req.params.id) 
+
+  const deleteProduct = await Products.deleteOne({_id : productId})
+  if(deleteProduct) {
+    return res.send("product deleted")
+  }else{
+    return res.send("something went wrong")
+  }
 })
 
 router.get('/user/product/:id', (req, res) => {
