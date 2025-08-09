@@ -15,13 +15,14 @@ app.use(express.json());
 
 // app.use(authRoutes) 
 
-// app.use((req, res) => {
-//   if (token === 'valid') {
-//     next()
-//   } else {
-//     res.send('token invalid')
-//   }
-// })
+app.use((req, res, next) => {
+  const token = 'hgj'
+  if (token === 'valid') {
+    next()
+  } else {
+    res.send('token invalid')
+  }
+})
 
 
 app.use(userRoutes) 
