@@ -13,7 +13,7 @@ app.use(express.json());
 
 
 
-// app.use(authRoutes) 
+app.use(authRoutes) 
 
 app.use((req, res, next) => {
   const token = 'hgj'
