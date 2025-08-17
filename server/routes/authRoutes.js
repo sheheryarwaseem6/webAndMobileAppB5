@@ -1,5 +1,6 @@
 import express from 'express'
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 const router = express.Router()
 import { client } from '../dbConfig.js';
 const myDB = client.db("myEcommerce");
@@ -24,6 +25,7 @@ router.post('/register', async (req, res) => {
           email: email,
           password: hashedPassword,
           phone: req.body.phone,
+          isVerified : false,
         }
 
         const response = await Users.insertOne(user)
@@ -35,18 +37,52 @@ router.post('/register', async (req, res) => {
   }
 })
 
-router.post('/login', (request, res) => {
-  console.log(request.body)
-  if (request.body.email && request.body.password) {
-    const checkUser = users.find(user => user.email === request.body.email && user.password === request.body.password)
-    console.log(checkUser, 'checkUser')
-    if (checkUser) {
-      res.send('login successful')
-    } else {
-      res.send('login failed')
+router.post('/signIn', async(req, res) => {
+  try {
+    if(!req.body.email || !req.body.password){
+      return res.send({
+        status : 0,
+        message : "Email or Password is required"
+      })
     }
-  } else {
-    res.send('login failed')
+    let email = req.body.email.toLowerCase()
+    const emailFormat = /^[a-zA-Z0-9_.+]+(?<!^[0-9]*)@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    if(!email.match(emailFormat)){
+      return res.send({
+        status : 0,
+        message : "Email is Invalid"
+      })
+    }
+    const user = await Users.findOne({email})
+    if(!user){
+      return res.send({
+        status : 0,
+        message : "Email is not registered!"
+      })
+    }
+    const matchPassword = await bcrypt.compareSync(req.body.password, user.password)
+    if(!matchPassword){
+      return res.send({
+        status : 0,
+        message : "Email or Password is incorrect"
+      })
+    }
+    const token = await jwt.sign({
+      email,
+      firstName : user.firstName,
+    },"secret", { expiresIn: '1h' })
+    return res.send({
+      status : 1,
+      message : "Login Successful",
+      token,
+      data : user
+    })
+  } catch (error) {
+    return res.send({
+      status : 0,
+      error : error,
+      message : "Something Went Wrong"
+    })
   }
 })
 
