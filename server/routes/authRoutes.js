@@ -55,7 +55,7 @@ router.post('/signIn', async(req, res) => {
     }
     const user = await Users.findOne({email})
     if(!user){
-      return res.send({
+      return res.status(404).send({
         status : 0,
         message : "Email is not registered!"
       })
@@ -70,12 +70,20 @@ router.post('/signIn', async(req, res) => {
     const token = await jwt.sign({
       email,
       firstName : user.firstName,
-    },"secret", { expiresIn: '1h' })
+    },process.env.SECRET_KEY, { expiresIn: '1h' })
+
+    res.cookie("token", token,{
+      httpOnly: true,
+      secure : true
+    })
+
     return res.send({
       status : 1,
       message : "Login Successful",
-      token,
-      data : user
+      data : {
+        firstName : user.firstName,
+        email : user.email,
+      }
     })
   } catch (error) {
     return res.send({
