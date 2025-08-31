@@ -71,7 +71,7 @@ router.post('/signIn', async (req, res) => {
             _id: user._id,
             email,
             firstName: user.firstName,
-        }, process.env.SECRET, { expiresIn: '1h' })
+        }, process.env.SECRET, { expiresIn: '5h' })
 
         res.cookie("token", token, {
             httpOnly: true,

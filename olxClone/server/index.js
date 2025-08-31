@@ -21,7 +21,7 @@ app.use(authRoutes)
 
 app.use((req, res, next) => {
   try{
-    let decoded = jwt.verify(req.cookies.token, process.env.SECRET_KEY);
+    let decoded = jwt.verify(req.cookies.token, process.env.SECRET);
     next()
   }catch(error){
     return res.send({
