@@ -15,7 +15,10 @@ router.post('/user/product', async (req, res) => {
 
   const response = await Products.insertOne(product)
   if (response) {
-    return res.send("product added successfully")
+    return res.send({
+      data : product,
+      message: "product added succesfully"
+    })
   }
   else {
     return res.send("something went wrong")
