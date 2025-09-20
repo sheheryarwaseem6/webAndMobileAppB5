@@ -4,11 +4,15 @@ import InputField from './components/InputField'
 import { Provider } from "react-redux";
 import { store } from './store/store'
 import Products from './components/Products';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js' 
+import Registration from './components/Registration';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-    <Products />
+    <Registration/>
+    {/* <Products /> */}
   </Provider>
   </StrictMode>,
 )
