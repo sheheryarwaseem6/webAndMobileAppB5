@@ -12,8 +12,11 @@ export const registerUser = createAsyncThunk('registerUser', async (data, { reje
             body:JSON.stringify(data),
         }
         )
+        if (!response.ok) {
+              const errorData = await response.json(); 
+              return rejectWithValue(errorData);
+            }
         const result = await response.json()
-        console.log(result)
         return result
     } catch (error) {
         return rejectWithValue(error)

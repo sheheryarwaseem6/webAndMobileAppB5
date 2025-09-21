@@ -5,14 +5,25 @@ import { Provider } from "react-redux";
 import { store } from './store/store'
 import Products from './components/Products';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js' 
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import Registration from './components/Registration';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './components/Login';
+import Home from './components/Home';
+import NotFound from './components/NotFound';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-    <Registration/>
-    {/* <Products /> */}
-  </Provider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path="/register" element={<Registration />} />
+          <Route path='/login' element={<Login/>}/>
+          
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </StrictMode>,
 )

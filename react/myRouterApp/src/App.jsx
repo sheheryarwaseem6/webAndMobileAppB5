@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { CreateBrowserRouter, Route, Routes } from "react-router-dom"
 import Home from "./Pages/Home"
 import Dashboard from "./Pages/Dashboard"
 import NotFound from "./Pages/NotFound"
@@ -10,7 +10,7 @@ import Settings from "./components/Settings"
 function App() {
 
   return (
-  <BrowserRouter>
+  <CreateBrowserRouter>
     <Nav />
     <Routes>
       <Route path="/" element={<Home />}/>
@@ -20,7 +20,7 @@ function App() {
       </Route>
       <Route path="*" element={<NotFound />}/>
     </Routes>
-  </BrowserRouter>
+  </CreateBrowserRouter>
   )
 }
 

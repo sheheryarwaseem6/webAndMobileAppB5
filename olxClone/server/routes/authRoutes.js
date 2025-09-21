@@ -10,7 +10,10 @@ const Users = myDB.collection("users");
 router.post('/register', async (req, res) => {
     try{
         if (!req.body.firstName || !req.body.lastName || !req.body.phone || !req.body.email || !req.body.password) {
-            res.send('please fill out complete form')
+            return res.status(400).send({
+                status : 0,
+                message: "all fields are required"
+            })
         } else {
             let email = req.body.email.toLowerCase()
             const emailFormat = /^[a-zA-Z0-9_.+]+(?<!^[0-9]*)@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
@@ -35,14 +38,13 @@ router.post('/register', async (req, res) => {
     
                     const response = await Users.insertOne(user)
 
-                    if(response.insertedId){
-                        const findUser = await Users.findOne({_id:new ObjectId(response.insertedId)}, {password : 0})
+                    
                         return res.send({
                             status: 1,
                             message : "user registered succesfully",
-                            data : findUser
+                            data : response
                         })
-                    }
+                
                 }
             } else {
                 return res.send({

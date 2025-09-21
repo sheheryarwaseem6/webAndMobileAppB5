@@ -1,10 +1,18 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../features/user/userAction";
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+
 
 
 function Registration() {
     const [data, setData] = useState({})
+     const {user, error, loading} = useSelector((state) => state.user);
+    const navigate = useNavigate()
+    console.log(user)
+    console.log(error)
+    console.log(loading)
     const dispatch = useDispatch()
     const handleInput = (e) => {
         setData({
@@ -12,11 +20,16 @@ function Registration() {
             [e.target.name]: e.target.value,
         });
     };
-    const handleSubmit = (e) => {
+    const handleSubmit =async (e) => {
 
         console.log(data, " data")
-        dispatch(registerUser(data))
+        const response =await dispatch(registerUser(data))
+        console.log(response)
+        if(response.payload.data){
+            navigate("/login")
+        }
     };
+
     return (
         <>
             <input
@@ -54,7 +67,8 @@ function Registration() {
                 name="password"
                 required
             />
-            <button onClick={handleSubmit}>Add Task</button>
+            <button onClick={handleSubmit}>Register User</button>
+            {error?.message}
         </>
 
     );

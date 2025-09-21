@@ -16,7 +16,7 @@ export const userSlice = createSlice({
             }).addCase(registerUser.fulfilled, (state, action) => {
                 state.loading = false;
                 console.log(action.payload)
-                state.user = action.payload.data;
+                state.user = action.payload;
             }).addCase(registerUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
