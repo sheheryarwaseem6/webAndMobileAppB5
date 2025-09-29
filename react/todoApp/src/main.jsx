@@ -11,6 +11,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import Home from './components/Home';
 import NotFound from './components/NotFound';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -20,6 +21,12 @@ createRoot(document.getElementById('root')).render(
           <Route path='/' element={<Home/>}/>
           <Route path="/register" element={<Registration />} />
           <Route path='/login' element={<Login/>}/>
+          <Route path='/products'
+            element={
+              <ProtectedRoute>
+                <Products/>
+              </ProtectedRoute>
+            }/>
           
           <Route path="*" element={<NotFound />} />
         </Routes>

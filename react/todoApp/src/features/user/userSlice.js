@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser } from "./userAction";
+import { loginUser, registerUser } from "./userAction";
 
 export const userSlice = createSlice({
     name: "userSlice",
@@ -18,6 +18,16 @@ export const userSlice = createSlice({
                 console.log(action.payload)
                 state.user = action.payload;
             }).addCase(registerUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(loginUser.pending, (state) => {
+                state.loading = true;
+            }).addCase(loginUser.fulfilled, (state, action) => {
+                state.loading = false;
+                console.log(action.payload)
+                state.user = action.payload.data;
+            }).addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })

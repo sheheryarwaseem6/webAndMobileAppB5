@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../features/user/userAction";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, registerUser } from "../features/user/userAction";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
     const [data, setData] = useState({})
     const navigate = useNavigate()
+    const { user, error, loading } = useSelector((state) => state.user);
     
     const dispatch = useDispatch()
     const handleInput = (e) => {
@@ -16,11 +17,14 @@ function Login() {
             [e.target.name]: e.target.value,
         });
     };
-    const handleSubmit = (e) => {
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         console.log(data, " data")
-        const response = dispatch(registerUser(data))
+        const response = await dispatch(loginUser(data))
         console.log(response)
+        if (response.payload) {
+            navigate('/products')
+        }
     };
     return (
         <>
@@ -39,6 +43,14 @@ function Login() {
                 required
             />
             <button onClick={handleSubmit}>Login User</button>
+            {
+                loading && <> loading...</>
+            }
+            {error && <>
+            {error.message}
+            </>
+            
+            }
         </>
 
     );

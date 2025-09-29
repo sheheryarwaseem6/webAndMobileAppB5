@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getAllProducts = createAsyncThunk('getProducts', async (data, { rejectWithValue }) => {
     try {
-        const response = await fetch('http://localhost:3001/user/products')
+        const response = await fetch('http://localhost:3002/user/products')
         const result = await response.json()
         console.log(result)
         return result

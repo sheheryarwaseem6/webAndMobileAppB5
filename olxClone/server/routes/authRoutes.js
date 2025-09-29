@@ -119,5 +119,61 @@ router.post('/signIn', async (req, res) => {
     }
 })
 
+router.get('/auth/me',(req, res)=>{
+    try{
+        const token = req.cookies?.token
+        if(!token){
+            return res.status(401).send({
+                status: 0,
+                message : 'Unauthorized'
+            })
+        }else{
+            let decoded = jwt.verify(token, process.env.SECRET);
+            console.log(decoded, "decoded")
+            return res.status(200).send({
+                status: 1,
+                data : decoded
+            })
+        }
+
+    }catch(error){
+        return res.send({
+            status: 0,
+            error: error,
+            message: "Something Went Wrong"
+        })
+    }
+})
+
+router.post('/logout',(req, res)=>{
+    try{
+        const token = req.cookies?.token
+        if(!token){
+            return res.status(401).send({
+                status: 0,
+                message : 'Unauthorized'
+            })
+        }else{
+            let decoded = jwt.verify(token, process.env.SECRET);
+            if(decoded){
+                res.clearCookie('token',{
+                    httpOnly: true,
+                    secure: true
+                })
+                return res.status(200).send({
+                status: 1,
+                message: "logout successfully"
+            })
+            }
+        }
+    }catch(error){
+        return res.send({
+            status: 0,
+            error: error,
+            message: "Something Went Wrong"
+        })
+    }
+})
+
 
 export default router;

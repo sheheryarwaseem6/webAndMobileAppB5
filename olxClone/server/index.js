@@ -12,7 +12,10 @@ client.connect();
 console.log("You successfully connected to MongoDB!");
 
 const app = express()
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  credentials: true
+}))
 const port = process.env.PORT || 3002
 app.use(express.json());
 app.use(cookieParser())
