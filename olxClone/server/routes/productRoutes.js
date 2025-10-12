@@ -5,7 +5,9 @@ const router = express.Router()
 const myDB = client.db("olxClone");
 const Products = myDB.collection("products");
 const Favourites = myDB.collection("favourites");
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
+import {upload} from '../middlewares/multer.js';
+import cloudinary from '../middlewares/cloudinary.js'
 
 
 router.post('/user/product', async (req, res) => {
@@ -145,5 +147,21 @@ router.get('/user/cart/:userId', (request, res) => {
 router.post('/user/checkout/:cartId', (request, res) => {
   res.send('order placed succesfully')
 })
+
+router.post('/uploadFile', upload.single('productPhoto'), async (req, res) =>{
+  // req.file is the name of your file in the form above, here 'uploaded_file'
+  // req.body will hold the text fields, if there were any
+  console.log(req.file, req.body)
+      const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "products",
+    });
+    console.log(result)
+  return res.status(200).send({
+    file : req.file,
+    body:  req.body,
+    result : result
+  })
+});
+
 
 export default router;
