@@ -10,14 +10,21 @@ import {upload} from '../middlewares/multer.js';
 import cloudinary from '../middlewares/cloudinary.js'
 
 
-router.post('/user/product', async (req, res) => {
+router.post('/user/product', upload.single('productImage'), async (req, res) => {
   let decoded = jwt.verify(req.cookies.token, process.env.SECRET);
   console.log(decoded)
+  let imageUrl = null;
+  if(req.file){
+    imageUrl = await cloudinary.uploader.upload(req.file.path, {
+      folder: "products",
+    });
+  }
   const product = {
     title: req.body.title,
     description: req.body.description,
     price: req.body.price,
     category: req.body.category,
+    productImage : imageUrl?.secure_url,
     postedBy: decoded._id,
     status: true,
     deletedAt: null,
@@ -37,15 +44,26 @@ router.post('/user/product', async (req, res) => {
 })
 
 router.get('/user/products', async (req, res) => {
-  const allProducts = Products.find({ status: true, isDeleted: false, deletedAt: null })
+  const {page, limit} = req.query
+  const skip = (parseInt(page) - 1) * parseInt(limit)
+  const totalProducts = await Products.countDocuments({ status: true, isDeleted: false, deletedAt: null})
+  const totalPages = Math.ceil(totalProducts / parseInt(limit))
+  const allProducts = Products.find({ status: true, isDeleted: false, deletedAt: null }).skip(skip).limit(parseInt(limit))
   const response = await allProducts.toArray()
   console.log(response)
   if (response.length > 0) {
-    return res.send(response)
+    return res.status(200).send({
+      data: response,
+      totalPages: totalPages,
+      currentPage: page,
+      totalProducts: totalProducts
+    })
 
   } else {
 
-    return res.send('No products found')
+    return res.status(404).send({
+      message: 'No products found'
+    })
   }
 })
 router.get('/user/myProducts', async (req, res) => {

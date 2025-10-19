@@ -5,6 +5,9 @@ export const productSlice = createSlice({
     name: "productSlice",
     initialState: {
         products: [],
+        currentPage: 1,
+        totalPages: 1,
+        totalProducts: 0,
         error: null,
         loading: false,
     },
@@ -16,7 +19,10 @@ export const productSlice = createSlice({
             }).addCase(getAllProducts.fulfilled, (state, action) => {
                 state.loading = false;
                 console.log(action.payload)
-                state.products = action.payload;
+                state.products = action.payload.data;
+                state.currentPage = action.payload.currentPage;
+                state.totalPages = action.payload.totalPages;
+                state.totalProducts = action.payload.totalProducts;
             }).addCase(getAllProducts.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
